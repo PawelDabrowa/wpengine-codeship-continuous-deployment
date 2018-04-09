@@ -93,6 +93,12 @@ if [ ! -d "./wp-content/themes" ]; then
     mkdir ./wp-content/themes
 fi
 
+cd ../clone && composer update && composer install
+nvm use 9
+cd ~/clone/wp-content/themes/${REPO_NAME} && yarn && yarn run build:production
+
+cd ~/deployment
+
 rsync -a ../clone/wp-content/themes/${REPO_NAME}/* ./wp-content/themes/${REPO_NAME}
 rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
 
