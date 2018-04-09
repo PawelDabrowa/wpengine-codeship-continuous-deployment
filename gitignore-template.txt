@@ -13,6 +13,7 @@ resources
 *.sublime-project
 node_modules
 vendor
+package.json
 
 # wordpress specific
 wp-config.php

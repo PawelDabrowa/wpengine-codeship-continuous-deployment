@@ -1,5 +1,4 @@
 scss
-package.json
 .DS_Store
 node_modules
 bower_components
