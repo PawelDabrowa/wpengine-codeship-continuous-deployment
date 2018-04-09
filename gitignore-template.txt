@@ -5,6 +5,7 @@
 *.bak
 *.swp
 *.log
+*.lock
 Thumbs.db
 
 # Roots Sage
@@ -12,8 +13,8 @@ resources
 *.sublime-workspace
 *.sublime-project
 node_modules
-vendor
 package.json
+composer.*
 
 # wordpress specific
 wp-config.php
