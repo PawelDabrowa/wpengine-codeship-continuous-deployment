@@ -93,9 +93,12 @@ if [ ! -d "./wp-content/themes" ]; then
     mkdir ./wp-content/themes
 fi
 
+# Install plugin packages
 cd ../clone && composer update && composer install
-cd ~/clone/wp-content/themes/${REPO_NAME}
-yarn && yarn run build:production
+
+# Install theme packaged and compile into production version
+yarn cache clean
+cd ~/clone/wp-content/themes/${REPO_NAME} && yarn && yarn run build:production
 
 cd ~/deployment
 
