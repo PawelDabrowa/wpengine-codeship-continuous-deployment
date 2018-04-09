@@ -94,7 +94,6 @@ if [ ! -d "./wp-content/themes" ]; then
 fi
 
 cd ../clone && composer update && composer install
-nvm use 9
 cd ~/clone/wp-content/themes/${REPO_NAME} && yarn && yarn run build:production
 
 cd ~/deployment
