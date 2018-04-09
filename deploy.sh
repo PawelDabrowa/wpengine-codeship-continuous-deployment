@@ -3,7 +3,6 @@
 set -e
 
 # Check for required environment variables and make sure they are setup
-: ${PROJECT_TYPE?"PROJECT_TYPE Missing"} # theme|plugin
 : ${WPE_INSTALL?"WPE_INSTALL Missing"}   # subdomain for wpengine install 
 : ${REPO_NAME?"REPO_NAME Missing"}       # repo name (Typically the folder name of the project)
 
@@ -32,7 +31,7 @@ cd ~/clone
 # Get official list of files/folders that are not meant to be on production if $EXCLUDE_LIST is not set.
 if [[ -z "${EXCLUDE_LIST}" ]];
 then
-    wget https://raw.githubusercontent.com/linchpin/wpengine-codeship-continuous-deployment/master/exclude-list.txt
+    wget https://raw.githubusercontent.com/humet/wpengine-codeship-continuous-deployment/master/exclude-list.txt
 else
     # @todo validate proper url?
     wget ${EXCLUDE_LIST}
@@ -75,10 +74,11 @@ fi
 
 # Move the gitignore file to the deployments folder
 cd ~/deployment
-wget --output-document=.gitignore https://raw.githubusercontent.com/linchpin/wpengine-codeship-continuous-deployment/master/gitignore-template.txt
+wget --output-document=.gitignore https://raw.githubusercontent.com/humet/wpengine-codeship-continuous-deployment/master/gitignore-template.txt
 
-# Delete plugin/theme if it exists, and move cleaned version into deployment folder
-rm -rf /wp-content/${PROJECT_TYPE}s/${REPO_NAME}
+# Delete plugins and theme if it exists, and move cleaned version into deployment folder
+rm -rf /wp-content/themes/${REPO_NAME}
+rm -rf /wp-content/plugins
 
 # Check to see if the wp-content directory exists, if not create it
 if [ ! -d "./wp-content" ]; then
@@ -93,7 +93,8 @@ if [ ! -d "./wp-content/themes" ]; then
     mkdir ./wp-content/themes
 fi
 
-rsync -a ../clone/* ./wp-content/${PROJECT_TYPE}s/${REPO_NAME}
+rsync -a ../clone/wp-content/themes/${REPO_NAME}/* ./wp-content/themes/${REPO_NAME}
+rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
 
 # Stage, commit, and push to wpengine repo
 
