@@ -97,7 +97,8 @@ fi
 cd ../clone && composer update && composer install
 
 # Install theme packaged and compile into production version
-cd ~/clone/wp-content/themes/${REPO_NAME} && yarn cache clean && yarn && yarn run build:production
+cd ~/clone/wp-content/themes/${REPO_NAME}
+yarn cache clean && yarn && yarn run build:production
 
 cd ~/deployment
 
