@@ -24,6 +24,10 @@ then
     repo=production
 fi
 
+# Set Global PHP version
+
+phpenv global 7.2
+
 # Begin from the ~/clone directory
 # this directory is the default your git project is checked out into by Codeship.
 cd ~/clone
