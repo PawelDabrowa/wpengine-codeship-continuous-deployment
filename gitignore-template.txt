@@ -9,12 +9,12 @@
 Thumbs.db
 
 # Roots Sage
-resources
 *.sublime-workspace
 *.sublime-project
 node_modules
 package.json
 composer.*
+assets
 
 # wordpress specific
 wp-config.php
