@@ -98,7 +98,7 @@ if [ ! -d "./wp-content/themes" ]; then
 fi
 
 # Install plugin packages
-cd ../clone && composer update && composer install
+cd ../clone && composer install
 
 # Install theme packages and compile into production version
 cd ~/clone/wp-content/themes/${REPO_NAME}
