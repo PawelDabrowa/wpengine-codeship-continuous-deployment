@@ -105,7 +105,7 @@ cd ~/clone/wp-content/themes/${REPO_NAME}
 
 composer install
 
-yarn cache clean && yarn && yarn run build:production
+yarn && yarn run build:production
 
 cd ~/deployment
 
