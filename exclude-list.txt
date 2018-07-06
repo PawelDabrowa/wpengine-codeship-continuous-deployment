@@ -6,5 +6,6 @@ bower_components
 Gruntfile.js
 build-scripts
 .gitignore
+.gitkeep
 atlassian-ide-plugin.xml
 wpengine-codeship-continuous-deployment
