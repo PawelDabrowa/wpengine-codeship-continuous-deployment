@@ -14,7 +14,7 @@ Thumbs.db
 node_modules
 package.json
 composer.*
-assets
+resources/assets
 
 # wordpress specific
 wp-config.php
@@ -30,6 +30,7 @@ wp-content/cache/supercache/*
 # wpengine specific
 .smushit-status
 .gitattributes
+.gitkeep
 _wpeprivate
 wp-content/object-cache.php
 wp-content/mu-plugins/mu-plugin.php
