@@ -3,7 +3,7 @@
 set -e
 
 # Check for required environment variables and make sure they are setup
-: ${WPE_INSTALL?"WPE_INSTALL Missing"}   # subdomain for wpengine install 
+: ${WPE_INSTALL?"WPE_INSTALL Missing"}   # subdomain for wpengine install
 : ${REPO_NAME?"REPO_NAME Missing"}       # repo name (Typically the folder name of the project)
 
 # Set repo based on current branch, by default master=production, develop=staging
@@ -90,6 +90,9 @@ if [ ! -d "./wp-content" ]; then
 fi
 # Check to see if the plugins directory exists, if not create it
 if [ ! -d "./wp-content/plugins" ]; then
+    mkdir ./wp-content/plugins
+else
+    rm -r ./wp-content/plugins
     mkdir ./wp-content/plugins
 fi
 # Check to see if the themes directory exists, if not create it
