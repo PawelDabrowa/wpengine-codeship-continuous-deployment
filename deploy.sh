@@ -121,12 +121,12 @@ cd ~/deployment
 
 if [ "$PROJECT_TYPE" == "theme" ]
 then
-  rsync -a ../clone/wp-content/themes/${REPO_NAME}/* ./wp-content/themes/${REPO_NAME}
+  rsync -a ../clone/* ./wp-content/themes/${REPO_NAME}
 fi
 
 if [ "$PROJECT_TYPE" == "plugin" ]
 then
-  rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
+  rsync -a ../clone/* ./wp-content/plugins
 fi
 
 # Stage, commit, and push to wpengine repo
