@@ -84,7 +84,7 @@ wget --output-document=.gitignore https://raw.githubusercontent.com/humet/wpengi
 if [ "$PROJECT_TYPE" == "theme" ]
   then
   rm -rf /wp-content/themes/${REPO_NAME}
-else if [ "$PROJECT_TYPE" == "plugin" ]
+elif [ "$PROJECT_TYPE" == "plugin" ]
   then
   rm -rf /wp-content/plugins
 fi
@@ -97,11 +97,11 @@ fi
 if [ ! -d "./wp-content/plugins" ]; then
     mkdir ./wp-content/plugins
 else
-    if [ "$PROJECT_TYPE" == "plugin" ]
-      then
-        rm -r ./wp-content/plugins
-        mkdir ./wp-content/plugins
-    fi
+  if [ "$PROJECT_TYPE" == "plugin" ]
+  then
+    rm -r ./wp-content/plugins
+    mkdir ./wp-content/plugins
+  fi
 fi
 # Check to see if the themes directory exists, if not create it
 if [ ! -d "./wp-content/themes" ]; then
@@ -133,7 +133,7 @@ fi
 
 if [ "$PROJECT_TYPE" == "plugin" ]
 then
-rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
+  rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
 fi
 
 # Stage, commit, and push to wpengine repo
