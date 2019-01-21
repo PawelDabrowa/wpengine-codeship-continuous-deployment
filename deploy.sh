@@ -5,7 +5,7 @@ set -e
 # Check for required environment variables and make sure they are setup
 : ${WPE_PROD_INSTALL?"WPE_PROD_INSTALL Missing"}   # subdomain for wpengine production install
 : ${WPE_DEV_INSTALL?"WPE_DEV_INSTALL Missing"}   # subdomain for wpengine development install
-: ${REPO_NAME?"REPO_NAME Missing"}       # repo name (Typically the folder name of the project)
+: ${REPO_NAME?"REPO_NAME Missing"}       # theme repo name (Typically the folder name of the project)
 : ${PROJECT_TYPE?"PROJECT_TYPE Missing"} # Whether to push theme or plugins
 
 # Set repo based on current branch, by default master=production, develop=staging
@@ -126,7 +126,7 @@ fi
 
 if [ "$PROJECT_TYPE" == "plugin" ]
 then
-  rsync -a ../clone/* ./wp-content/plugins
+  rsync -a ../clone/* ./
 fi
 
 # Stage, commit, and push to wpengine repo
