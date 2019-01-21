@@ -6,6 +6,7 @@ set -e
 : ${WPE_PROD_INSTALL?"WPE_PROD_INSTALL Missing"}   # subdomain for wpengine production install
 : ${WPE_DEV_INSTALL?"WPE_DEV_INSTALL Missing"}   # subdomain for wpengine development install
 : ${REPO_NAME?"REPO_NAME Missing"}       # repo name (Typically the folder name of the project)
+: ${PROJECT_TYPE?"PROJECT_TYPE Missing"} # Whether to push theme or plugins
 
 # Set repo based on current branch, by default master=production, develop=staging
 # @todo support custom branches
@@ -80,8 +81,13 @@ cd ~/deployment
 wget --output-document=.gitignore https://raw.githubusercontent.com/humet/wpengine-codeship-continuous-deployment/master/gitignore-template.txt
 
 # Delete plugins and theme if it exists, and move cleaned version into deployment folder
-rm -rf /wp-content/themes/${REPO_NAME}
-rm -rf /wp-content/plugins
+if [ "$PROJECT_TYPE" == "theme" ]
+  then
+  rm -rf /wp-content/themes/${REPO_NAME}
+else if [ "$PROJECT_TYPE" == "plugin" ]
+  then
+  rm -rf /wp-content/plugins
+fi
 
 # Check to see if the wp-content directory exists, if not create it
 if [ ! -d "./wp-content" ]; then
@@ -91,28 +97,44 @@ fi
 if [ ! -d "./wp-content/plugins" ]; then
     mkdir ./wp-content/plugins
 else
-    rm -r ./wp-content/plugins
-    mkdir ./wp-content/plugins
+    if [ "$PROJECT_TYPE" == "plugin" ]
+      then
+        rm -r ./wp-content/plugins
+        mkdir ./wp-content/plugins
+    fi
 fi
 # Check to see if the themes directory exists, if not create it
 if [ ! -d "./wp-content/themes" ]; then
     mkdir ./wp-content/themes
 fi
 
-# Install plugin packages
-cd ../clone && composer install
+if [ "$PROJECT_TYPE" == "plugin" ]
+  then
+    # Install plugin packages
+    cd ../clone && composer install
+fi
 
-# Install theme packages and compile into production version
-cd ~/clone/wp-content/themes/${REPO_NAME}
+if [ "$PROJECT_TYPE" == "theme" ]
+then
+  # Install theme packages and compile into production version
+  cd ~/clone/wp-content/themes/${REPO_NAME}
 
-composer install
+  composer install
 
-yarn cache clean && yarn && yarn run build:production
+  yarn cache clean && yarn && yarn run build:production
+fi
 
 cd ~/deployment
 
-rsync -a ../clone/wp-content/themes/${REPO_NAME}/* ./wp-content/themes/${REPO_NAME}
+if [ "$PROJECT_TYPE" == "theme" ]
+then
+  rsync -a ../clone/wp-content/themes/${REPO_NAME}/* ./wp-content/themes/${REPO_NAME}
+fi
+
+if [ "$PROJECT_TYPE" == "plugin" ]
+then
 rsync -a ../clone/wp-content/plugins/* ./wp-content/plugins
+fi
 
 # Stage, commit, and push to wpengine repo
 
