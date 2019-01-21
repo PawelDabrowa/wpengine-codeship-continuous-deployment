@@ -108,19 +108,12 @@ if [ ! -d "./wp-content/themes" ]; then
     mkdir ./wp-content/themes
 fi
 
-if [ "$PROJECT_TYPE" == "plugin" ]
-  then
-    # Install plugin packages
-    cd ../clone && composer install
-fi
+# Install plugin/theme packages
+cd ../clone && composer install
 
 if [ "$PROJECT_TYPE" == "theme" ]
 then
   # Install theme packages and compile into production version
-  cd ~/clone/wp-content/themes/${REPO_NAME}
-
-  composer install
-
   yarn cache clean && yarn && yarn run build:production
 fi
 
