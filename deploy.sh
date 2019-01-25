@@ -70,7 +70,7 @@ else
     fi
 fi
 
-if [[ $CI_MESSAGE != *#nolint* ]]
+if [[ $CI_MESSAGE = *#nolint* ]]
 then
   force='-o nolint'
 fi
