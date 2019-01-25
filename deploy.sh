@@ -70,6 +70,11 @@ else
     fi
 fi
 
+if [[ $CI_MESSAGE != *#nolint* ]]
+then
+  force='-o nolint'
+fi
+
 # If there was a problem cloning, exit
 if [ "$?" != "0" ] ; then
     echo "Unable to clone ${repo}"
