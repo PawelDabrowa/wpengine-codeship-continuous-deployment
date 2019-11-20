@@ -25,5 +25,5 @@ set -e
   yarn cache clean && yarn && yarn run build:production
 
 # Rsync to directory on server
-  echo "Syncing theme to server"
+  echo "Syncing theme to server: ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}"
   rsync -avz ~/clone/ ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}
