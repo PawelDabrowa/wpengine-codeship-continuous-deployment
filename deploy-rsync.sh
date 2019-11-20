@@ -26,4 +26,4 @@ set -e
 
 # Rsync to directory on server
   echo "Syncing theme to server: ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}"
-  rsync -avz ~/clone/ ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}
+  rsync -avz -e "ssh" ~/clone/ ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}
