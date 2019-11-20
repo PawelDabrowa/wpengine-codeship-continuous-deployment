@@ -26,7 +26,9 @@ yarn cache clean && yarn && yarn run build:production
 
 # Rsync to directory on server
 # Create theme directory if not exist
-ssh ${SSH_USERNAME}@${target_install} mkdir -p ~/public_html/wp-content/themes/${REPO_NAME}
+ssh ${SSH_USERNAME}@${target_install}
+mkdir -p ~/public_html/wp-content/themes/${REPO_NAME}
+exit
 
 echo "Syncing theme to server: ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}"
 rsync -avz -e "ssh" ~/clone/ ${SSH_USERNAME}@${target_install}:~/public_html/wp-content/themes/${REPO_NAME}
