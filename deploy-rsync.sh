@@ -24,6 +24,29 @@ composer install
 # Install theme packages and compile into production version
 yarn cache clean && yarn && yarn run build:production
 
+# Get official list of files/folders that are not meant to be on production if $EXCLUDE_LIST is not set.
+if [[ -z "${EXCLUDE_LIST}" ]];
+then
+    wget https://raw.githubusercontent.com/humet/wpengine-codeship-continuous-deployment/master/exclude-list.txt
+else
+    # @todo validate proper url?
+    wget ${EXCLUDE_LIST}
+fi
+
+# Loop over list of files/folders and remove them from deployment
+ITEMS=`cat exclude-list.txt`
+for ITEM in $ITEMS; do
+    if [[ $ITEM == *.* ]]
+    then
+        find . -depth -name "$ITEM" -type f -exec rm "{}" \;
+    else
+        find . -depth -name "$ITEM" -type d -exec rm -rf "{}" \;
+    fi
+done
+
+# Remove exclude-list file
+rm exclude-list.txt
+
 # Rsync to directory on server
 # Create theme directory if not exist
 ssh ${SSH_USERNAME}@${target_install} 'mkdir -p ~/public_html/wp-content/themes/${REPO_NAME}'
